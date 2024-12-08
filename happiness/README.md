@@ -34,6 +34,10 @@ Moreover, the high number of missing values signals a need for comprehensive rep
 
 ## Visualizing the Findings
 
+![image](https://github.com/user-attachments/assets/924389fa-3387-47f8-84b6-38d1be230472)
+
+
+
 Visualizations reveal a positive correlation between Log GDP per capita and Life Ladder scores, highlighting the role of economic stability in happiness, while countries with strong Social Support also report higher life satisfaction. Additionally, bar charts of the top and bottom countries emphasize global disparities, where social, economic, and political factors play a crucial role in well-being.
 
 In conclusion, this exploration is a stepping stone toward understanding and improving global happiness. By recognizing the complex interplay of factors influencing life satisfaction, we can envision strategies designed to elevate well-being across the globe. Through informed decisions and renewed efforts, we may pave the way for a happier, healthier world.
