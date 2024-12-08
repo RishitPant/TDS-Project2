@@ -35,6 +35,7 @@ Moreover, the high number of missing values signals a need for comprehensive rep
 ## Visualizing the Findings
 
 ![image](https://github.com/user-attachments/assets/924389fa-3387-47f8-84b6-38d1be230472)
+![image](https://github.com/user-attachments/assets/8936a4d3-8a91-47a7-9790-35a93c2370f0)
 
 
 
