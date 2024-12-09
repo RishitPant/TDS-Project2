@@ -11,7 +11,6 @@
 # ///
 
 
-
 import os
 import sys
 import pandas as pd
@@ -110,9 +109,16 @@ def main(csv_file):
         print(f"File '{csv_file}' not found.")
         sys.exit(1)
 
-    # Load data
-    data = pd.read_csv(csv_file, encoding='ISO-8859-1')
+    # Handle CSV encoding
+    try:
+        data = pd.read_csv(csv_file, encoding='utf-8')
+    except UnicodeDecodeError:
+        # If UTF-8 fails, try ISO-8859-1 (Latin-1) encoding as a fallback
+        data = pd.read_csv(csv_file, encoding='ISO-8859-1')
+
+    # Define the output folder based on the CSV file name (without extension)
     output_dir = os.path.splitext(csv_file)[0]
+    # Create folder if it does not exist
     os.makedirs(output_dir, exist_ok=True)
 
     # Perform analysis
@@ -123,9 +129,9 @@ def main(csv_file):
     # Generate visualizations
     charts = generate_visualizations(data, output_dir)
 
-    # Create prompt for GPT-4o-mini
+    # Create a dynamic prompt for GPT-4o-mini to generate a story from the analysis
     prompt = f"""
-    You are analyzing a dataset that contains various attributes. Your task is to narrate a story based on the findings from the dataset analysis.
+    You are an expert data analyst. Below is an analysis of a dataset. Using your knowledge and analytical skills, craft a concise and insightful story about the findings.
 
     Dataset Overview:
     - Shape: {analysis['shape']}
@@ -133,21 +139,23 @@ def main(csv_file):
     - Summary Statistics: {json.dumps(analysis['summary_statistics'], indent=2)}
     - Outlier Info: {json.dumps(outlier_info, indent=2)}
 
-    Create a story-like narration based on these findings. Your story should:
-    1. Introduce the dataset and its key features.
-    2. Discuss the missing values and any notable observations.
-    3. Explore the summary statistics and what they reveal about the data.
-    4. Tell a story around the outliers, including their impact.
-    5. Conclude with insights and lessons learned, supported by visualizations.
+    Please write a narrative that:
+    1. Introduces the dataset and highlights the most important features.
+    2. Discusses the missing values and any observations regarding their impact.
+    3. Explores the summary statistics and shares the most interesting insights.
+    4. Tells a story about the outliers, what they might indicate, and their significance.
+    5. Concludes with key insights that can be derived from the analysis and what actions should be considered going forward.
     
-    Make it engaging and suitable for a report.
+    Keep the story engaging and informative, with clear actionable takeaways.
     """
+    
+    # Get the generated story from GPT
     story = get_chat_response(prompt)
 
-    # Save README and outputs
+    # Save the README file with the analysis results
     readme_file = os.path.join(output_dir, "README.md")
     with open(readme_file, "w") as f:
-        f.write("# Automated Data Analysis Report\n\n")
+        f.write("# Data Analysis Report\n\n")
         f.write(story + "\n\n")
         for chart in charts:
             f.write(f"![Chart]({os.path.basename(chart)})\n")
