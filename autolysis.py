@@ -5,7 +5,7 @@
 #   "pandas",
 #   "matplotlib",
 #   "seaborn",
-#   "sklearn",
+#   "scikit-learn",
 #   "requests"
 # ]
 # ///
